@@ -20,6 +20,7 @@ $records = array_slice($records, ($page - 1) * $per_page, $per_page);
 </head>
 <body>
 <h1>新竹市村里長名單</h1>
+第 <?= $page ?> 頁
 <table class="table">
     <tr>
         <td>鄉鎮</td>
