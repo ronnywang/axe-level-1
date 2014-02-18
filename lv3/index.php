@@ -6,14 +6,14 @@ ini_set('session.save_path', '/tmp');
 session_start();
 
 $records = json_decode(file_get_contents(__DIR__ . '/answer.json'));
-if ($_GET['page'] == 'next') {
-    $_SESSION['page'] ++;
-} elseif ($_GET['page'] == 'prev') {
-    $_SESSION['page'] --;
-}
-$page = max(1, intval($_SESSION['page']));
-$per_page = 10;
 $total_page = ceil(count($records) / $per_page);
+$page = max(1, intval($_SESSION['page']));
+if ($_GET['page'] == 'next') {
+    $_SESSION['page'] = min($page + 1, $total_page);
+} elseif ($_GET['page'] == 'prev') {
+    $_SESSION['page'] = max($page - 1, 1);
+}
+$per_page = 10;
 $records = array_slice($records, ($page - 1) * $per_page, $per_page);
 ?>
 <!DOCTYPE html>
