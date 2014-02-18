@@ -9,9 +9,9 @@ $records = json_decode(file_get_contents(__DIR__ . '/answer.json'));
 $total_page = ceil(count($records) / $per_page);
 $page = max(1, intval($_SESSION['page']));
 if ($_GET['page'] == 'next') {
-    $_SESSION['page'] = $page = min($page + 1, $total_page);
+    $page = $_SESSION['page'] = min($page + 1, $total_page);
 } elseif ($_GET['page'] == 'prev') {
-    $_SESSION['page'] = $page = max($page - 1, 1);
+    $page = $_SESSION['page'] = max($page - 1, 1);
 }
 $per_page = 10;
 $records = array_slice($records, ($page - 1) * $per_page, $per_page);
