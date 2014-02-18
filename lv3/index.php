@@ -6,6 +6,7 @@ ini_set('session.save_path', '/tmp');
 session_start();
 
 $records = json_decode(file_get_contents(__DIR__ . '/answer.json'));
+$per_page = 10;
 $total_page = ceil(count($records) / $per_page);
 $page = max(1, intval($_SESSION['page']));
 if ($_GET['page'] == 'next') {
@@ -13,7 +14,6 @@ if ($_GET['page'] == 'next') {
 } elseif ($_GET['page'] == 'prev') {
     $page = $_SESSION['page'] = max($page - 1, 1);
 }
-$per_page = 10;
 $records = array_slice($records, ($page - 1) * $per_page, $per_page);
 ?>
 <!DOCTYPE html>
@@ -51,7 +51,7 @@ $records = array_slice($records, ($page - 1) * $per_page, $per_page);
 <?php } else { ?>
 上一頁
 <?php } ?>
-第 <?= $page ?> 頁
+第 <?= $page ?> 頁 / 共 <?= $total_page ?> 頁
 <?php if ($page < $total_page) { ?>
 <a href='?page=next'>下一頁</a>
 <?php } else { ?>
